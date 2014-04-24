@@ -6,6 +6,13 @@ C:\xampp\htdocs\socialnukeapp\platforms\android\ant-build\classes\com\android\te
 C:\xampp\htdocs\socialnukeapp\platforms\android\ant-build\classes\com\android\test\R$string.class \
 C:\xampp\htdocs\socialnukeapp\platforms\android\ant-build\classes\com\android\test\R$xml.class \
 C:\xampp\htdocs\socialnukeapp\platforms\android\ant-build\classes\com\android\test\R.class \
+C:\xampp\htdocs\socialnukeapp\platforms\android\ant-build\classes\org\apache\cordova\contacts\ContactAccessor$WhereOptions.class \
+C:\xampp\htdocs\socialnukeapp\platforms\android\ant-build\classes\org\apache\cordova\contacts\ContactAccessor.class \
+C:\xampp\htdocs\socialnukeapp\platforms\android\ant-build\classes\org\apache\cordova\contacts\ContactAccessorSdk5.class \
+C:\xampp\htdocs\socialnukeapp\platforms\android\ant-build\classes\org\apache\cordova\contacts\ContactManager$1.class \
+C:\xampp\htdocs\socialnukeapp\platforms\android\ant-build\classes\org\apache\cordova\contacts\ContactManager$2.class \
+C:\xampp\htdocs\socialnukeapp\platforms\android\ant-build\classes\org\apache\cordova\contacts\ContactManager$3.class \
+C:\xampp\htdocs\socialnukeapp\platforms\android\ant-build\classes\org\apache\cordova\contacts\ContactManager.class \
 C:\xampp\htdocs\socialnukeapp\platforms\android\ant-build\classes\org\apache\cordova\inappbrowser\InAppBrowser$1.class \
 C:\xampp\htdocs\socialnukeapp\platforms\android\ant-build\classes\org\apache\cordova\inappbrowser\InAppBrowser$2.class \
 C:\xampp\htdocs\socialnukeapp\platforms\android\ant-build\classes\org\apache\cordova\inappbrowser\InAppBrowser$3.class \
