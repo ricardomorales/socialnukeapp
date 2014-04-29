@@ -41,6 +41,13 @@ var app = {
         
         function onSuccess(contacts) {
             alert('Found ' + contacts.length + ' contacts.');
+            if(contacts.length > 0 ) {
+                alert(contacts[0]);
+                contacts[0].remove(findContacts,onError);
+            }
+            else {
+                alert('Contact deleted');
+            }
         };
 
         function onError(contactError) {
@@ -48,12 +55,16 @@ var app = {
         };
 
         // find all contacts with 'Bob' in any name field
-        var options      = new ContactFindOptions();
-        options.filter   = "Bob";
-        options.multiple = true;
-        var fields       = ["displayName", "name"];
-        navigator.contacts.find(fields, onSuccess, onError, options);
-        
+
+        function findContacts() {
+            var options      = new ContactFindOptions();
+            options.filter   = "Stefan";
+            options.multiple = true;
+            var fields       = ["displayName", "name"];
+            navigator.contacts.find(fields, onSuccess, onError, options);
+        };
+
+        findContacts();
         
         $('#registerButton').click(function(){
             registerTwitter();
