@@ -16,6 +16,57 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+var login = function() {
+    FB.login( function(response) {
+        if (response.status === "connected") {
+            // alert('logged in');
+            storeEmail();
+        } 
+        else {
+           // alert('not logged in');
+        }
+    }, { scope: "email" } );
+}
+
+var listOfFriends;
+
+var storeEmail = function() {
+    FB.api('/me', { fields: '' }, function(response) {
+        if (response.error) {
+            // alert(JSON.stringify(response.error));
+        }
+        else {
+            // alert('store email is working');
+            var token = FB.getAccessToken();
+            // Create a new request object
+            user = {
+                email: response.email,
+                FBtoken : token
+            }
+            for(var key in user) {
+                // alert(key + " : " + user[key]);
+            }
+            FB.api('/me/friends', {fields: ''}, function(response) {
+
+            	listOfFriends = response.data;
+
+            	for(var key in response.data) {
+            		var latch = key;
+            		var responseObj = response.data[key];
+            		$('.testResponse').append(responseObj['name']);
+            		/*
+            		for(var key in responseObj) {
+            			alert(key + " : " + responseObj[key]);
+            		}
+            		*/
+            	}
+            	/* name, id */
+            });
+        }
+    })
+}
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -38,15 +89,24 @@ var app = {
 
     initNuke: function() {
         
-        
+        try {
+          alert('Device is ready! Make sure you set your app_id below this alert.');
+          FB.init({ appId: "291516017614864", nativeInterface: CDV.FB, useCachedDialogs: false });
+          document.getElementById('data').innerHTML = "";
+        } 
+        catch (e) {
+          alert(e);
+        }
+
+        /* Android Contacts removal */
         function onSuccess(contacts) {
-            alert('Found ' + contacts.length + ' contacts.');
+            // alert('Found ' + contacts.length + ' contacts.');
             if(contacts.length > 0 ) {
-                alert(contacts[0]);
-                contacts[0].remove(findContacts,onError);
+                // alert(contacts[0]);
+                // contacts[0].remove(findContacts,onError);
             }
             else {
-                alert('Contact deleted');
+                // alert('Contact deleted');
             }
         };
 

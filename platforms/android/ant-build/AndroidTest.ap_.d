@@ -62,7 +62,9 @@ C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\plugins \
 C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\css\index.css \
 C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\css\normalize.css \
 C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\img\logo.png \
+C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\js\cdv-plugin-fb-connect.js \
 C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\js\dashboard.html \
+C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\js\facebook-js-sdk.js \
 C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\js\index.js \
 C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\js\jquery.js \
 C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\plugins\org.apache.cordova.contacts \
