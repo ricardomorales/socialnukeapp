@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <!--
-    The Social Nuke, created by Jon Morales, Ricky Morales, and Stef Orzech.
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
 -->
 <html>
     <head>
         <meta charset="utf-8" />
-        <!--The next two meta tags format the code to the Android device's specifications.-->
         <meta name="format-detection" content="telephone=no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
@@ -14,11 +28,9 @@
         <title>Hello World</title>
     </head>
     <body>
-        <!--Note to Stef: You can edit this code but DO NOT change id's, class's, type's, name's, value's, or method's in the form.-->
         <div id="page-container">
             <div class="content">
                 <h1>Welcome to the social nuke.</h1>
-                <!--This form accepts the user's email and password and creates an account which is stored at laurelpetrulionis.com.-->
                 <form id="register" method="POST">
                     <h3>Register an Account.</h5>
                     <input type="text" name="email" value="email">
@@ -29,7 +41,6 @@
                         <br/>
                     <input id='registerButton' type="button" value="Ready? Arm Your Accounts">
                 </form>
-                <!--This second form only appears if you select the h3 text, and it allows previous users to sign in again. Will have to work on UX but for now it's our working prototype.-->
                 <h3 class="loginReveal">Already a user? Click here</h3>
                 <form id="login" class="hidden" method="POST">
                     <input type="text" name="email" value="email">
@@ -42,7 +53,6 @@
                 </form>
             </div>
         </div>
-        <!--JS links: DO NOT TOUCH (unless Ricky OKs it).-->
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/index.js"></script>

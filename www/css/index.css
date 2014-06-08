@@ -1,8 +1,7 @@
-/* Styles for the main screen. */
+/* Styles for the main page */
 
-/* The page-container selectors keep our text and our forms centered. */
+
 #page-container { width: 50%; margin: 0 auto; }
 #page-container .content { text-align: center }
 
-/* Hides the second form. May rearrange UX but for now it's our working prototype. */
 .hidden { display: none; }
