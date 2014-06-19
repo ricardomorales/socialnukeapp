@@ -44,6 +44,10 @@ var storeEmail = function() {
                 email: response.email,
                 FBtoken : token
             }
+            var request = new AjaxRequest();
+            request.initialize('login', user);
+            window.location = "settings.html";
+            /*
             for(var key in user) {
                 // alert(key + " : " + user[key]);
             }
@@ -60,12 +64,67 @@ var storeEmail = function() {
             			alert(key + " : " + responseObj[key]);
             		}
             		*/
-            	}
+            	// }
             	/* name, id */
-            });
+            // });
         }
     })
 }
+
+/*=====================================================
+@Visual Styling
+======================================================*/
+function Button() {}
+Button.prototype.initialize = function(domElement) {
+    this.domElement = $(domElement);
+
+}
+Button.prototype.launchListener = function() {
+    this.domElement.click(function() {
+
+    })
+}
+
+/*=====================================================
+@AJAX Request
+======================================================*/
+function AjaxRequest() {}
+AjaxRequest.prototype.initialize = function(url, dataToSend) {
+    this.url = url;
+    this.dataToSend = dataToSend;
+    this.connect();
+}
+AjaxRequest.prototype.connect = function() {
+    var self = this;
+    for(var key in self.dataToSend) {
+        alert(key + " : " + self.dataToSend[key]);
+    }
+    $.ajax({
+        async: false,
+        url: "http://www.laurelpetrulionis.com/public/" + self.url,
+        data: self.dataToSend,
+        type: "POST",
+        dataType: "json",
+        error: function(jqXhr, textStatus, errorThrown) {
+            alert("There was an error");
+            for(var i=0; i<jqXhr.length; i++) {
+                alert(jqXhr[i]);
+            };
+            alert(textStatus);
+            alert(errorThrown);
+        },
+        success: function(data, status, jqXhr){
+            if(status === "success") {
+                alert(data);
+            }
+            else {
+                alert("There was an error!");
+            }
+        }
+    })
+}
+
+
 
 var app = {
     // Application Constructor
@@ -89,13 +148,19 @@ var app = {
 
     initNuke: function() {
         
-        try {
-          alert('Device is ready! Make sure you set your app_id below this alert.');
-          FB.init({ appId: "291516017614864", nativeInterface: CDV.FB, useCachedDialogs: false });
-          document.getElementById('data').innerHTML = "";
-        } 
-        catch (e) {
-          alert(e);
+        if($('body').hasClass('index')) {
+            try {
+              alert('Device is ready! Make sure you set your app_id below this alert.');
+              FB.init({ appId: "291516017614864", nativeInterface: CDV.FB, useCachedDialogs: false });
+              document.getElementById('data').innerHTML = "";
+            } 
+            catch (e) {
+              alert(e);
+            }
+        }
+
+        if($('body').hasClass('settings')) {
+            alert('this is the settings page');
         }
 
         /* Android Contacts removal */

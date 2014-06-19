@@ -59,6 +59,7 @@ C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\img \
 C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\index.html \
 C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\js \
 C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\plugins \
+C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\settings.html \
 C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\css\index.css \
 C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\css\normalize.css \
 C:\xampp\htdocs\socialnukeapp\platforms\android\assets\www\img\logo.png \
