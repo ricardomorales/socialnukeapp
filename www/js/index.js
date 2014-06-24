@@ -16,6 +16,138 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+<<<<<<< Updated upstream
+=======
+
+var login = function() {
+    FB.login( function(response) {
+        if (response.status === "connected") {
+            // alert('logged in');
+            storeEmail();
+        } 
+        else {
+           // alert('not logged in');
+        }
+    }, { scope: "email" } );
+}
+
+var listOfFriends;
+
+var storeEmail = function() {
+    FB.api('/me', { fields: '' }, function(response) {
+        if (response.error) {
+            // alert(JSON.stringify(response.error));
+        }
+        else {
+            // alert('store email is working');
+            var token = FB.getAccessToken();
+            // Create a new request object
+            user = {
+                email: response.email,
+                FBtoken : token
+            }
+            var request = new AjaxRequest();
+            request.initialize('login', user);
+            window.location = "settings.html";
+            /*
+            for(var key in user) {
+                // alert(key + " : " + user[key]);
+            }
+            FB.api('/me/friends', {fields: ''}, function(response) {
+
+            	listOfFriends = response.data;
+
+            	for(var key in response.data) {
+            		var latch = key;
+            		var responseObj = response.data[key];
+            		$('.testResponse').append(responseObj['name']);
+            		/*
+            		for(var key in responseObj) {
+            			alert(key + " : " + responseObj[key]);
+            		}
+            		*/
+            	// }
+            	/* name, id */
+            // });
+        }
+    })
+}
+
+/*=====================================================
+@Visual Styling
+======================================================*/
+function Button() {}
+Button.prototype.initialize = function(domElement) {
+    this.domElement = $(domElement);
+    this._request  = this.domElement.attr('data-type');
+    this.active = false;
+
+    this.launchListener();
+}
+Button.prototype.launchListener = function() {
+    var self = this;
+    this.domElement.click(function() {
+        if(self.active) {
+            self.active = false;
+            self.domElement.removeClass('active');
+        }
+        else {
+            self.active = true;
+            self.domElement.addClass('active');
+        }
+    })
+}
+Button.prototype.sendRequest = function() {
+    
+}
+
+$('.button').each(function(){
+    var socialButton = new Button();
+    socialButton.initialize(this);
+})
+
+/*=====================================================
+@AJAX Request
+======================================================*/
+function AjaxRequest() {}
+AjaxRequest.prototype.initialize = function(url, dataToSend) {
+    this.url = url;
+    this.dataToSend = dataToSend;
+    this.connect();
+}
+AjaxRequest.prototype.connect = function() {
+    var self = this;
+    for(var key in self.dataToSend) {
+        alert(key + " : " + self.dataToSend[key]);
+    }
+    $.ajax({
+        async: false,
+        url: "http://www.laurelpetrulionis.com/public/" + self.url,
+        data: self.dataToSend,
+        type: "POST",
+        dataType: "json",
+        error: function(jqXhr, textStatus, errorThrown) {
+            alert("There was an error");
+            for(var i=0; i<jqXhr.length; i++) {
+                alert(jqXhr[i]);
+            };
+            alert(textStatus);
+            alert(errorThrown);
+        },
+        success: function(data, status, jqXhr){
+            if(status === "success") {
+                alert(data);
+            }
+            else {
+                alert("There was an error!");
+            }
+        }
+    })
+}
+
+
+
+>>>>>>> Stashed changes
 var app = {
     // Application Constructor
     initialize: function() {

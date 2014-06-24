@@ -4,4 +4,28 @@
 #page-container { width: 50%; margin: 0 auto; }
 #page-container .content { text-align: center }
 
+<<<<<<< Updated upstream
 .hidden { display: none; }
+=======
+.hidden { display: none; }
+
+
+/*========================================
+@Settings Page
+=========================================*/
+
+.button {
+	border-radius: 10px;
+	border: 1px solid black;
+	height: 10px;
+    width: 10px;
+}
+
+.button.active {
+	background: #000;
+}
+
+.button:hover {
+	cursor: pointer;
+}
+>>>>>>> Stashed changes
