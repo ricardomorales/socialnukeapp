@@ -4,9 +4,6 @@
 #page-container { width: 50%; margin: 0 auto; }
 #page-container .content { text-align: center }
 
-<<<<<<< Updated upstream
-.hidden { display: none; }
-=======
 .hidden { display: none; }
 
 
@@ -28,4 +25,3 @@
 .button:hover {
 	cursor: pointer;
 }
->>>>>>> Stashed changes

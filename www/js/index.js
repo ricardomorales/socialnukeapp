@@ -16,8 +16,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-<<<<<<< Updated upstream
-=======
 
 var login = function() {
     FB.login( function(response) {
@@ -145,9 +143,6 @@ AjaxRequest.prototype.connect = function() {
     })
 }
 
-
-
->>>>>>> Stashed changes
 var app = {
     // Application Constructor
     initialize: function() {
