@@ -29,8 +29,6 @@ var login = function() {
     }, { scope: "email" } );
 }
 
-var listOfFriends;
-
 var storeEmail = function() {
     FB.api('/me', { fields: '' }, function(response) {
         if (response.error) {
@@ -44,85 +42,249 @@ var storeEmail = function() {
                 email: response.email,
                 FBtoken : token
             }
-            var request = new AjaxRequest();
-            request.initialize('login', user);
-            window.location = "settings.html";
-            /*
-            for(var key in user) {
-                // alert(key + " : " + user[key]);
-            }
-            FB.api('/me/friends', {fields: ''}, function(response) {
-
-            	listOfFriends = response.data;
-
-            	for(var key in response.data) {
-            		var latch = key;
-            		var responseObj = response.data[key];
-            		$('.testResponse').append(responseObj['name']);
-            		/*
-            		for(var key in responseObj) {
-            			alert(key + " : " + responseObj[key]);
-            		}
-            		*/
-            	// }
-            	/* name, id */
-            // });
+            facebookForm.initialize(user);
         }
     })
 }
+
+
+    if($('body').hasClass('login')) {
+        window.localStorage.clear();
+        var facebookForm = {};
+        facebookForm.initialize = function(user) {
+            this.user = user;
+            this.sendRequest();
+        };
+        facebookForm.sendRequest = function() {
+            var request = new AjaxRequest();
+            request.initialize('login', this.user, this.callback, this);   
+        };
+        facebookForm.callback = function(data) {
+            if(data.success) {
+                var activation = {};
+                for(var key in data.activation) {
+                    activation[key] = data.activation[key];
+                }
+                window.localStorage.setItem('activation', JSON.stringify(activation));
+                window.localStorage.setItem('user', JSON.stringify(this.user));
+                window.location.href = data.redirect;
+            }
+            else {
+                alert('Please try again');
+            }
+        };
+        facebookForm.initialize();
+    }
 
 /*=====================================================
 @Visual Styling
 ======================================================*/
-function Button() {}
-Button.prototype.initialize = function(domElement) {
-    this.domElement = $(domElement);
 
-}
-Button.prototype.launchListener = function() {
-    this.domElement.click(function() {
-
-    })
-}
-
-/*=====================================================
-@AJAX Request
-======================================================*/
-function AjaxRequest() {}
-AjaxRequest.prototype.initialize = function(url, dataToSend) {
-    this.url = url;
-    this.dataToSend = dataToSend;
-    this.connect();
-}
-AjaxRequest.prototype.connect = function() {
-    var self = this;
-    for(var key in self.dataToSend) {
-        alert(key + " : " + self.dataToSend[key]);
-    }
-    $.ajax({
-        async: false,
-        url: "http://www.laurelpetrulionis.com/public/" + self.url,
-        data: self.dataToSend,
-        type: "POST",
-        dataType: "json",
-        error: function(jqXhr, textStatus, errorThrown) {
-            alert("There was an error");
-            for(var i=0; i<jqXhr.length; i++) {
-                alert(jqXhr[i]);
-            };
-            alert(textStatus);
-            alert(errorThrown);
-        },
-        success: function(data, status, jqXhr){
-            if(status === "success") {
-                alert(data);
+    /*========================
+    Settings Page
+    =========================*/
+    if($('body').hasClass('settings')) {
+        
+        var activationStorage = JSON.parse(window.localStorage.getItem('activation'));
+        console.log(activationStorage);
+        /* Constructor for various API requests */
+        function Api() {}
+        Api.prototype.initialize = function(base) {
+            this.base = $(base);
+            this.socNetwork  = this.base.attr('data-type');
+            this._button = $(this.base.find('.button'));
+            this.active = activationStorage[this.socNetwork.toLowerCase() + 'Activation'];
+            this._input = $(this.base.find('.input-text'));
+            
+            if(this.active) {
+                this._input.addClass('active');
+                this._button.addClass('active');
             }
-            else {
-                alert("There was an error!");
+
+            this.launchListener();
+        };
+        Api.prototype.launchListener = function() {
+            var self = this;
+            this._button.click(function() {
+                if(!self.active) {
+                    self.active = true;
+                    // self._input.addClass('active');
+                    self._button.addClass('active');
+                    self.sendRequest();
+                }
+                else {
+                    self.active = false;
+                    self._input.removeClass('active');
+                    self._button.removeClass('active');
+                    self.sendRequest();
+                }
+            })
+        };
+        Api.prototype.sendRequest = function() {
+            var request = new AjaxRequest();
+            var activeObject = {
+                active : this.active
             }
+            request.initialize('settings' + this.socNetwork, activeObject, this.callback, this);
+        };
+        Api.prototype.callback = function(data) {
+            var activation = {};
+            for(var key in data.activation) {
+                activation[key] = data.activation[key];
+            }
+            window.localStorage.setItem('activation', JSON.stringify(activation));
+            
+            // Redirect, if applicable
+            var URL = data['redirect'];
+            if(URL) {
+                window.location.href = URL;
+            }
+        };
+
+        /* Create API functionality and store objects into an array */
+        var socNetworkArray = [];
+        $('.api-container').each(function(){
+            var socialNetwork = new Api();
+            socialNetwork.initialize(this);
+            socNetworkArray.push(socialNetwork);
+        });
+
+
+        var next = {};
+        next.initialize = function() {
+            this.base = $('.content');
+            this._button = $(this.base.find('.nextButton'));
+            this._fields = {};
+            this.launchListener();
         }
-    })
-}
+        next.launchListener = function() {
+            var self = this;
+            this._button.click(function() {
+            
+                $('.api-container').each(function(){
+                    $this = $(this);
+                    self._fields[$this.attr('data-type')] = $this.find('.input-text').val();
+                })
+                window.localStorage.setItem('fields',JSON.stringify(self._fields));
+                console.log(window.localStorage);
+                window.location.href = 'nuke';
+            })                       
+        }
+        next.initialize();
+        
+    }
+
+    /*========================
+    Snapchat Login Page
+    =========================*/
+    if($('body').hasClass('snapchat-login')) {
+
+        var snapchatForm = {};
+        snapchatForm.initialize = function() {
+            this.base = $('#snapchatForm');
+            this._button = $(this.base.find('.button'));
+            this._inputContainers = [];
+            this.user = {};
+            var self = this;
+            var i=0;
+
+            $('.input-container').each(function(){
+                self._inputContainers[i] = {};
+                $this = $(this);
+                self._inputContainers[i]['input'] = $this;
+                self._inputContainers[i]['text'] = $this.find('.input-text');
+                self._inputContainers[i]['validation'] = $this.find('.validation-advice');
+                i++;
+            })
+
+            this.launchListener();
+        }
+        snapchatForm.launchListener = function() {
+            var self = this;
+            this._button.click(function() {
+                if(self.validate()) {
+                    self.sendRequest();
+                }
+            })
+        }
+        snapchatForm.validate = function() {
+            for(var i=0; i<this._inputContainers.length; i++) {
+                if(this._inputContainers[i]['text'].val().length < 1) {
+                    $(this._inputContainers[i]['validation']).removeClass('hidden');
+                    return false;
+                }
+                else {
+                    this.user[this._inputContainers[i]['text'].attr('name')] = this._inputContainers[i]['text'].val();
+                    $(this._inputContainers[i]['validation']).addClass('hidden');
+                }
+            }
+            return true;
+        }
+        snapchatForm.sendRequest = function() {
+            var request = new AjaxRequest();
+            request.initialize('snapchatConnect', this.user, this.callback, this);   
+        }
+        snapchatForm.callback = function(data) {
+            var activation = {};
+            for(var key in data.activation) {
+                activation[key] = data.activation[key];
+            }
+            window.localStorage.setItem('activation', JSON.stringify(activation));
+            console.log(data);
+            var URL = data['redirect'];
+            window.location.href = URL;
+        }
+        snapchatForm.initialize();
+    }
+   
+/*=====================================================
+@Global Constructors
+======================================================*/
+
+    /*=========================
+    @AJAX Request
+    ===========================*/
+    function AjaxRequest() {}
+    AjaxRequest.prototype.initialize = function(url, dataToSend, callback, parent){
+        this.url = url;
+        this.dataToSend = dataToSend;
+        this.callback = callback;
+        this._parent = parent;
+        this.connect();
+    }
+    AjaxRequest.prototype.connect = function() {
+        var self = this;
+        $.ajax({
+            async: false,
+            url: "http://www.laurelpetrulionis.com/" + self.url,
+            data: self.dataToSend,
+            type: "POST",
+            dataType: "json",
+            error: function(jqXhr, textStatus, errorThrown) {
+                /* uncomment if you want to see the errors
+                alert("There was an error");
+                for(var i=0; i<jqXhr.length; i++) {
+                    alert(jqXhr[i]);
+                };
+                alert(textStatus);
+                alert(errorThrown);
+                */
+            },
+            success: function(data, status, jqXhr){
+                if(status === "success") {
+                    if(data['success']) {
+                        self._parent.callback(data);
+                    }
+                    else {
+                        alert('Incorrect username or password.');
+                    }
+                }
+                else {
+                    alert("There was an error!");
+                }
+            }
+        });
+    };
 
 
 
@@ -203,83 +365,6 @@ var app = {
             @classes
         =======================================================================
         */
-
-            // Define the base class for a standard PHP Request
-
-            function PhpRequest(url, type, dataType, dataToSend) {
-                var self = this;
-                this.url = url;
-                this.type = type;
-                this.dataType = dataType;
-                this.dataToSend = dataToSend;
-                this.returnedData = "";
-
-                this.serverConnect = function() {
-                    $.ajax({
-                        async: false,
-                        url: "http://www.laurelpetrulionis.com/twitterphp/"+self.url+".php",
-                        data: self.dataToSend,
-                        type: self.type,
-                        dataType: self.dataType,
-                        success: function(data, status, jqXhr){
-                            if(status === "success") {
-                                self.returnedData = data;
-                            }
-                            else {
-                                alert("There was an error!");
-                            }
-                        }
-                    })
-                }
-            }
-
-            // Extend the PHP Request class to allow for URL redirection
-
-            RedirectRequest.protoype = new PhpRequest();
-
-            function RedirectRequest() {
-                PhpRequest.apply(this, arguments);
-                this.redirectUrl = "";
-
-                // Pull a usable URL from our returned data
-                this.redirect = function() {
-                    var string = this.redirectUrl;
-                    var stringLocation = string.indexOf("https://");
-                    var finalUrl = string.substring(stringLocation, string.length);
-
-                    var displayEmail = window.localStorage.getItem('email');
-                    var browser = window.open(finalUrl, '_blank', 'location=no');
-                    browser.addEventListener('loaderror', function(event) { alert('there was an error.') });
-                    browser.addEventListener('loadstop', function(event) {
-                        if(event.url.match(/dashboard/).length > 0) {
-                            var currentUrl = event.url;
-                            // Get the oauth verifier from the current url
-                            var key = "oauth_verifier=";
-                            var oauth_index = currentUrl.indexOf(key);
-                            var oauth_verifier = currentUrl.substring(oauth_index + key.length, currentUrl.length);
-
-                            window.localStorage.setItem("oauth_verifier", oauth_verifier);
-                            browser.close();
-                            window.location.href = 'dashboard.html';
-                        }
-                    });
-                    browser.addEventListener('exit', function(event) { alert('This is the email listener: ' + displayEmail); });
-                }
-            }
-
-            // Extend the PHP Request class to allow for appending content to the DOM
-
-            DisplayDataRequest.prototype = new PhpRequest();
-
-            function DisplayDataRequest() {
-                PhpRequest.apply(this, arguments);
-
-                // Append the returned data to the specified target
-                this.displayData = function(target) {
-                    $(target).append(this.returnedData)
-                }
-            }
-
 
             // Functions for storing user email with a temporary cookie
 
@@ -406,7 +491,7 @@ var app = {
             }
 
 
-            if($('body').hasClass("dashboard")) {
+            if($('body').hasClass("settings")) {
 
                 var currentUrl = document.URL;
                 
@@ -430,7 +515,6 @@ var app = {
                 }
                 
             }
-
 
             var oauth_token;
             var oauth_token_secret;

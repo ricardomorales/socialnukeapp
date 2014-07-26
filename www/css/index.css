@@ -1,23 +1,41 @@
 /* Styles for the main page */
 
 
-#page-container { width: 50%; margin: 0 auto; }
-#page-container .content { text-align: center }
+#page-container {
+    width: 50%; margin: 0 auto;
+}
+#page-container .content {
+    text-align: center
+}
 
-.hidden { display: none; }
+.hidden {
+    display: none;
+}
 
+.input-text {
+    display: none;
+}
+.input-text.active {
+    display: block;
+    margin: 0 auto;
+}
 
 /*========================================
 @Settings Page
 =========================================*/
 
-.button {
-	border-radius: 10px;
-	border: 1px solid black;
-	height: 10px;
+.button, .nextButton {
+    border-radius: 10px;
+    border: 1px solid black;
+    height: 10px;
     width: 10px;
+    margin: 0 auto 10px;
 }
 
-.button:hover {
-	cursor: pointer;
+.button.active {
+    background: #000;
+}
+
+.button:hover, .nextButton:hover {
+    cursor: pointer;
 }
