@@ -1,0 +1,13 @@
+Android/bin/
+Android/gen/
+Android/assets/
+platforms/android/CordovaLib/ant-build/build.prop
+platforms/android/ant-build/AndroidTest-debug-unaligned.apk
+platforms/android/ant-build/AndroidTest-debug.apk
+platforms/android/ant-build/AndroidTest.ap_
+platforms/android/ant-build/AndroidTest.ap_.d
+platforms/android/ant-build/build.prop
+platforms/android/assets/www/css/index.css
+platforms/android/assets/www/index.html
+platforms/android/assets/www/js/index.js
+platforms/android/assets/www/settings.html
