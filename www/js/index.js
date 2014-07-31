@@ -255,7 +255,19 @@ var app = {
             // Redirect, if applicable
             var URL = data.redirect;
             if(URL) {
-                window.location.href = URL;
+                if(URL.indexOf('.html') != -1) {
+                    window.location.href = URL;
+                }
+                else {
+                    var browser = window.open(finalUrl, '_blank', 'location=no');
+                    browser.addEventListener('loaderror', function(event) { alert('there was an error.') });
+                    browser.addEventListener('loadstop', function(event) {
+                        if(event.url.match(/callback/).length > 0) {
+                            window.location.href = 'settings.html';
+                        }
+                    });
+                    browser.addEventListener('exit', function(event) { alert('This is exiting!'); });                    
+                }
             }
         };
 
