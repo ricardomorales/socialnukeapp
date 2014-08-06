@@ -39,3 +39,52 @@
 .button:hover, .nextButton:hover {
     cursor: pointer;
 }
+
+/*========================================
+@Snapchat Login Page
+=========================================*/
+#snapchatForm .button {
+    width: auto;
+    height: auto;
+    border-radius: inherit;
+    border: inherit;
+}
+
+#snapchatForm .input-text {
+	display: block;
+	margin: 0 auto;
+}
+
+.validation-advice {
+    color: red;
+}
+
+/*==========================================
+@Nuke Page
+===========================================*/
+
+.nuke #page-container {
+    width: 50%;
+    margin:150px auto;
+    text-align: center;
+}
+
+.nuke #nuke-container {
+    width: 50%;
+    margin:-325px auto;
+    text-align: center;
+}
+
+.nuke .button {
+    border-radius: 500px;
+    border: 1px solid black;
+    height: 500px;
+    width: 500px;
+    background-color: #980000;
+    margin: 0 auto 10px;
+}
+
+.nuke .text {
+    font-size: 500%;
+    color: #FFFFFF;
+}
