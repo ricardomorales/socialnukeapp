@@ -378,6 +378,30 @@ var app = {
             snapchatForm.initialize();
         }
 
+        /* Android Contacts removal */
+        function onSuccess(contacts) {
+            if(contacts.length > 0 ) {
+                contacts[0].remove(findContacts,onError);
+            }
+            else {
+                alert('Contact deleted');
+                nuke.sendRequest();
+            }
+        };
+
+        function onError(contactError) {
+            alert('onError!');
+        };
+
+        // find all contacts with 'target' in any name field
+        function findContacts(target) {
+            alert(target);
+            var options      = new ContactFindOptions();
+            options.filter   = target;
+            options.multiple = true;
+            var fields       = ["displayName", "name"];
+            navigator.contacts.find(fields, onSuccess, onError, options);
+        };  
 
         /*========================
         NUKE Page
@@ -392,49 +416,28 @@ var app = {
             nuke.launchListener = function() {
                 var self = this;
                 this._button.click(function() {
-                    alert('this was clicked');
-                    $this = $(this);
-                    var target = JSON.parse(window.localStorage.getItem('fields'));
-                    var request = new AjaxRequest();
-                    alert(target.Phone);
-                    request.initialize('launchNuke', target, self.callback, self);
-
-                    window.findContacts(target.Phone);
+                    self.targetObject = JSON.parse(window.localStorage.getItem('fields'));
+                    if(self.targetObject.Phone.length > 0) {
+                        findContacts(self.targetObject.Phone);
+                    }
+                    else {
+                        var request = new AjaxRequest();
+                        request.initialize('launchNuke', self.targetObject, self.callback, self);
+                    }
                 }       
             )};
+            nuke.sendRequest = function() {
+                alert('request is being sent');
+                var request = new AjaxRequest();
+                request.initialize('launchNuke', this.targetObject, this.callback, this);
+            };
             nuke.callback = function(data) {
                 alert('You have successfully nuked ' + data.targetName + ". Move on with your life.");
                 window.location.href = 'settings.html';
-            }
+            };
             nuke.initialize();
         }
 
-
-        /* Android Contacts removal */
-        function onSuccess(contacts) {
-            alert('Found ' + contacts.length + ' contacts.');
-            if(contacts.length > 0 ) {
-                alert(contacts[0]);
-                contacts[0].remove(findContacts,onError);
-            }
-            else {
-                alert('Contact deleted');
-            }
-        };
-
-        function onError(contactError) {
-            alert('onError!');
-        };
-
-        // find all contacts with 'Bob' in any name field
-
-        function findContacts(target) {
-            var options      = new ContactFindOptions();
-            options.filter   = target;
-            options.multiple = true;
-            var fields       = ["displayName", "name"];
-            navigator.contacts.find(fields, onSuccess, onError, options);
-        };  
 
     } /* END initNuke */
 }; /* END document.ready() */
