@@ -48,7 +48,6 @@
                     email: response.email,
                     FBtoken : token
                 };
-                alert('this is being sent: ' + user);
                 facebookForm.initialize(user);
             }
         });
@@ -67,7 +66,6 @@
     };
     AjaxRequest.prototype.connect = function() {
         var self = this;
-        alert(this.url);
         $.ajax({
             async: false,
             url: 'http://www.laurelpetrulionis.com/public/' + self.url,
@@ -75,16 +73,12 @@
             type: 'POST',
             dataType: 'json',
             error: function(jqXhr, textStatus, errorThrown) {
-                for(var key in self.dataToSend) {
-                    alert(self.dataToSend[key]);
-                }
                 alert("There was an AJAX error");
                 for(var i=0; i<jqXhr.length; i++) {
                     alert(jqXhr[i]);
                 };
                 alert(textStatus);
                 alert(errorThrown);
-                
             },
             success: function(data, status, jqXhr){
                 if(status === 'success') {
@@ -128,7 +122,6 @@ var app = {
         
         if($('body').hasClass('index')) {
             try {
-              alert('Device is ready! Make sure you set your app_id below this alert.');
               FB.init({ appId: "291516017614864", nativeInterface: CDV.FB, useCachedDialogs: false });
               document.getElementById('data').innerHTML = "";
             } 
@@ -180,13 +173,14 @@ var app = {
             Api.prototype.initialize = function(base) {
                 this.base = $(base);
                 this.socNetwork  = this.base.attr('data-type');
+                this._buttonContainer = $(this.base.find('.button-container'));
                 this._button = $(this.base.find('.button'));
                 this.active = activationStorage[this.socNetwork.toLowerCase() + 'Activation'];
                 this._input = $(this.base.find('.input-text'));
                 
                 if(this.active) {
                     this._input.addClass('active');
-                    this._button.addClass('active');
+                    this._buttonContainer.addClass('active');
                 }
 
                 this.launchListener();
@@ -195,11 +189,11 @@ var app = {
                 this.active = activationStorage[this.socNetwork.toLowerCase() + 'Activation'];
                 if(this.active) {
                     this._input.addClass('active');
-                    this._button.addClass('active');
+                    this._buttonContainer.addClass('active');
                 }
                 else {
                     this._input.removeClass('active');
-                    this._button.removeClass('active');   
+                    this._buttonContainer.removeClass('active');   
                 }
             };
             Api.prototype.launchListener = function() {
@@ -208,13 +202,13 @@ var app = {
                     if(!self.active) {
                         self.active = true;
                         // self._input.addClass('active');
-                        self._button.addClass('active');
+                        self._buttonContainer.addClass('active');
                         self.sendRequest();
                     }
                     else {
                         self.active = false;
                         self._input.removeClass('active');
-                        self._button.removeClass('active');
+                        self._buttonContainer.removeClass('active');
                         self.sendRequest();
                     }
                 });
@@ -231,7 +225,6 @@ var app = {
                 var activation = {};
                 for(var key in data.activation) {
                     activation[key] = data.activation[key];
-                    alert(key + ' : ' + data.activation[key]);
                 }
                 window.localStorage.setItem('activation', JSON.stringify(activation));
                 
@@ -259,7 +252,6 @@ var app = {
                             }
                         });
                         browser.addEventListener('exit', function(event) {
-                            alert('This is exiting!');
                             settingsUpdate.sendRequest();
                         });
                     }
@@ -276,7 +268,6 @@ var app = {
 
             var settingsUpdate = {};
             settingsUpdate.sendRequest =  function() {
-                alert('this request is working');
                 var request = new AjaxRequest();
                 request.initialize('update', null, this.callback, this);    
             }
@@ -284,7 +275,6 @@ var app = {
                 var activation = {};
                 for(var key in data.activation) {
                     activation[key] = data.activation[key];
-                    alert(key + ' : ' + data.activation[key]);
                 }
                 for(var i=0; i<socNetworkArray.length; i++) {
                     socNetworkArray[i].refresh(activation);
@@ -295,24 +285,45 @@ var app = {
             var next = {};
             next.initialize = function() {
                 this.base = $('.content');
+                this._container = $('.next-container');
                 this._button = $(this.base.find('.nextButton'));
+                this._active = false;
                 this._fields = {};
                 this.launchListener();
+                this.checkInputs();
             };
             next.launchListener = function() {
                 var self = this;
                 this._button.click(function() {
-                
                     $('.api-container').each(function(){
                         $this = $(this);
                         self._fields[$this.attr('data-type')] = $this.find('.input-text').val();
                     });
                     window.localStorage.setItem('fields',JSON.stringify(self._fields));
                     window.location.href = 'nuke.html';
-                });                  
+                });
+                this.base.on('keyup', 'input', function() {
+                    self.checkInputs();
+                });
+            };
+            next.checkInputs = function() {
+                for(var i=0; i<socNetworkArray.length; i++) {
+                    if(socNetworkArray[i]._input.val().length > 0) {
+                        self._active = true;
+                    }
+                }
+                this.updateVisibility();
+            };
+            next.updateVisibility = function() {
+                if(this._active) {
+                    this._container.addClass('active');
+                }
+                else {
+                    this._container.removeClass('active');
+                }
             };
             next.initialize();
-            
+
         }
 
         /*========================
@@ -384,7 +395,6 @@ var app = {
                 contacts[0].remove(findContacts,onError);
             }
             else {
-                alert('Contact deleted');
                 nuke.sendRequest();
             }
         };
@@ -395,7 +405,6 @@ var app = {
 
         // find all contacts with 'target' in any name field
         function findContacts(target) {
-            alert(target);
             var options      = new ContactFindOptions();
             options.filter   = target;
             options.multiple = true;
@@ -427,12 +436,10 @@ var app = {
                 }       
             )};
             nuke.sendRequest = function() {
-                alert('request is being sent');
                 var request = new AjaxRequest();
                 request.initialize('launchNuke', this.targetObject, this.callback, this);
             };
             nuke.callback = function(data) {
-                alert('You have successfully nuked ' + data.targetName + ". Move on with your life.");
                 window.location.href = 'settings.html';
             };
             nuke.initialize();
@@ -440,4 +447,4 @@ var app = {
 
 
     } /* END initNuke */
-}; /* END document.ready() */
+}; /* END app */
