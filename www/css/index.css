@@ -38,7 +38,7 @@ body {
 =========================================*/
 
 body.login {
-    background: url("../img/socialnuke-cover.jpg") no-repeat scroll center -27px rgba(0, 0, 0, 0);
+    background: url('../img/socialnuke-cover.jpg') no-repeat scroll center -27px rgba(0, 0, 0, 0);
     background-color: #9cb2fe;
     margin: 0 auto;
 }
@@ -145,10 +145,29 @@ body.login {
 
 .next-container {
     display: none;
+    text-align: right;
 }
 
 .next-container.active {
     display: block;
+}
+
+.next-container h3 {
+    padding-right: 15px;
+}
+
+.next-container > * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.next-container .button {
+    background: url("../img/next-button.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: medium none;
+    border-radius: 0;
+    height: 50px;
+    position: relative;
+    width: 50px;
 }
 
 .footer {
@@ -187,26 +206,47 @@ body.login {
 
 .nuke #page-container {
     width: 50%;
-    margin:150px auto;
-    text-align: center;
 }
 
-.nuke #nuke-container {
-    width: 50%;
-    margin:-325px auto;
-    text-align: center;
+.nuke .button-container {
+    background-color: #980000;
+    border-radius: 500px;
+    width: 100%;
+    padding: 10px;
+    height: 220px;
 }
 
 .nuke .button {
     border-radius: 500px;
     border: 1px solid black;
-    height: 500px;
-    width: 500px;
+    height: 200px;
+    width: 100%;
     background-color: #980000;
+    border: 1px solid #000;
     margin: 0 auto 10px;
+    position: relative;
 }
 
-.nuke .text {
-    font-size: 500%;
-    color: #FFFFFF;
+.prev-container {
+    margin-top: 25px;
+    padding-left: 15px;
+}
+
+.prev-container h3 {
+    padding-left: 15px;
+}
+
+.prev-container > * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.prev-container .button {
+    background: url("../img/prev-button.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: medium none;
+    border-radius: 0;
+    height: 50px;
+    position: relative;
+    width: 25px;
+    margin: 0;
 }

@@ -169,6 +169,7 @@ var app = {
             
             var activationStorage = JSON.parse(window.localStorage.getItem('activation'));
             /* Constructor for various API requests */
+            
             function Api() {}
             Api.prototype.initialize = function(base) {
                 this.base = $(base);
@@ -178,7 +179,7 @@ var app = {
                 this.active = activationStorage[this.socNetwork.toLowerCase() + 'Activation'];
                 this._input = $(this.base.find('.input-text'));
                 
-                if(this.active) {
+                if(this.active != 0) {
                     this._input.addClass('active');
                     this._buttonContainer.addClass('active');
                 }
@@ -187,13 +188,15 @@ var app = {
             };
             Api.prototype.refresh = function(activationStorage) {
                 this.active = activationStorage[this.socNetwork.toLowerCase() + 'Activation'];
-                if(this.active) {
+                if(this.active != 0) {
                     this._input.addClass('active');
                     this._buttonContainer.addClass('active');
                 }
                 else {
                     this._input.removeClass('active');
-                    this._buttonContainer.removeClass('active');   
+                    this._input.val('');
+                    this._input.trigger('keyup');
+                    this._buttonContainer.removeClass('active');
                 }
             };
             Api.prototype.launchListener = function() {
@@ -307,6 +310,7 @@ var app = {
                 });
             };
             next.checkInputs = function() {
+                var counter = 0;
                 for(var i=0; i<socNetworkArray.length; i++) {
                     if(socNetworkArray[i]._input.val().length > 0) {
                         counter++;
@@ -426,7 +430,14 @@ var app = {
             var nuke = {};
             nuke.initialize = function() {
                 this.base = $('#page-container');
+                this._buttonContainer = $(this.base.find('.button-container'));
                 this._button = $(this.base.find('.button'));
+                
+                // Set size of nuke button based on screen width
+                this._dimensions = this._button.width();
+                this._buttonContainer.css('height', this._dimensions + 'px');
+                this._button.css('height', this._dimensions + 'px');
+                
                 this.launchListener();
             };
             nuke.launchListener = function() {
