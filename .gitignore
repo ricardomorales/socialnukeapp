@@ -11,13 +11,3 @@ platforms/android/assets/www/css/index.css
 platforms/android/assets/www/index.html
 platforms/android/assets/www/js/index.js
 platforms/android/assets/www/settings.html
-platforms/android/assets/www/img/facebook-icon.png
-platforms/android/assets/www/img/socialnuke-cover.jpg
-platforms/android/assets/www/img/socialnuke-logo.png
-platforms/android/assets/www/nuke.html
-platforms/android/assets/www/snapchatCallback.html
-platforms/android/assets/www/snapchatLogin.html
-plugins/android.json
-platforms/android/AndroidManifest.xml
-platforms/android/ant-build/AndroidManifest.cordova.xml
-platforms/android/res/xml/config.xml
