@@ -211,15 +211,15 @@ body.login {
 .nuke .button-container {
     background-color: #980000;
     border-radius: 500px;
-    width: 100%;
+    width: 90%;
     padding: 10px;
-    height: 220px;
+    height: auto;
 }
 
 .nuke .button {
     border-radius: 500px;
     border: 1px solid black;
-    height: 200px;
+    height: auto;
     width: 100%;
     background-color: #980000;
     border: 1px solid #000;

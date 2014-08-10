@@ -194,8 +194,6 @@ var app = {
                 }
                 else {
                     this._input.removeClass('active');
-                    this._input.val('');
-                    this._input.trigger('keyup');
                     this._buttonContainer.removeClass('active');
                 }
             };
@@ -211,6 +209,8 @@ var app = {
                     else {
                         self.active = false;
                         self._input.removeClass('active');
+                        self._input.val('');
+                        self._input.trigger('keyup');
                         self._buttonContainer.removeClass('active');
                         self.sendRequest();
                     }
@@ -316,7 +316,6 @@ var app = {
                         counter++;
                     }
                 }
-                alert(counter);
                 if(counter > 0) {
                     this._active = true;
                 }
