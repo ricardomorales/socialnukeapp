@@ -28,7 +28,7 @@ body {
 }
 .input-text.active {
     display: block;
-    margin: 0 auto;
+    margin: 0 auto !important;
     clear: both;
 }
 
@@ -38,7 +38,8 @@ body {
 =========================================*/
 
 body.login {
-    background: #7d93cf;
+    background: url("../img/socialnuke-cover.jpg") no-repeat scroll center -27px rgba(0, 0, 0, 0);
+    background-color: #9cb2fe;
     margin: 0 auto;
 }
 
@@ -49,7 +50,7 @@ body.login {
 }
 
 .login .content {
-    bottom: 50px;
+    bottom: 40px;
     margin: 0 auto;
     position: fixed;
     width: 100%;

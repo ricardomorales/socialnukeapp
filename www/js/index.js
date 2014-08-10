@@ -309,8 +309,15 @@ var app = {
             next.checkInputs = function() {
                 for(var i=0; i<socNetworkArray.length; i++) {
                     if(socNetworkArray[i]._input.val().length > 0) {
-                        self._active = true;
+                        counter++;
                     }
+                }
+                alert(counter);
+                if(counter > 0) {
+                    this._active = true;
+                }
+                else {
+                    this._active = false;
                 }
                 this.updateVisibility();
             };
