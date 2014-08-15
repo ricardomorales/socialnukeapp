@@ -457,7 +457,9 @@ var app = {
                 request.initialize('launchNuke', this.targetObject, this.callback, this);
             };
             nuke.callback = function(data) {
-                window.location.href = 'settings.html';
+                alert('You successfully nuked ' + data.targetName + '. Move on with your life.');
+                
+                // window.location.href = 'settings.html';
             };
             nuke.initialize();
         }
