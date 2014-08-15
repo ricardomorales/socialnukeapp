@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+        <title>The Social Nuke</title>
+    </head>
+	<body class="nuke">
+		<div id="page-container">
+			<button type="button" class="button"></button>
+				<div id="nuke-container">
+					<div class="text"><p>NUKE</p></div>
+				</div>
+		</div>
+		<a href="settings.html">Settings</a>
+
+        <div id="fb-root"></div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <!-- Whitetail Media custom JS -->
+        <script type="text/javascript" src="js/facebook-js-sdk.js"></script>
+        <!-- cordova facebook plugin -->
+        <script type="text/javascript" src="js/cdv-plugin-fb-connect.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <!-- Facebook JavaScript SDK -->
+        <script type="text/javascript">
+            if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
+            if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
+            if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
+            app.initialize();
+        </script>
+        
+        <!-- These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
+            
+        <div id="log"></div>
+	</body>
+</html>
